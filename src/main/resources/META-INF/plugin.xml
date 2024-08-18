@@ -27,6 +27,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="gMockGen" secondary="true" icon="AllIcons.Toolwindows.WebToolWindow" anchor="bottom"
                     factoryClass="sspeiser.gMockGen.OutputWindow"/>
+        <annotator
+                language=""
+                implementationClass="sspeiser.gMockGen.SimpleAnnotator"/>
     </extensions>
     <actions>
         <action id="sspeiser.gMockGen.GenAction" class="sspeiser.gMockGen.GenAction" text="gMock">

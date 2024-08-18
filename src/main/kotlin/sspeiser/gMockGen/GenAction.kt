@@ -1,5 +1,6 @@
 package sspeiser.gMockGen
 
+import com.intellij.analysis.problemsView.toolWindow.ProblemsView
 import com.intellij.formatting.FormatterEx
 import com.intellij.formatting.FormattingMode
 import com.intellij.openapi.actionSystem.AnAction
@@ -20,8 +21,12 @@ import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStruct
 import com.jetbrains.cidr.lang.symbols.OCResolveContext
 import io.ktor.util.*
-
-
+import com.intellij.analysis.problemsView.toolWindow.ProblemsViewPanel
+import com.intellij.analysis.problemsView.toolWindow.ProblemsViewPanelProvider
+import com.intellij.codeInspection.InspectionEP
+import com.intellij.lang.annotation.AnnotationHolder
+import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.Annotation
 class GenAction : AnAction() {
     lateinit var console: OutputConsole;
     lateinit var oc_file: OCFile;
@@ -126,7 +131,7 @@ class GenAction : AnAction() {
         )
         val vfile = new_file.virtualFile!!
 
-        FileEditorManager.getInstance(currentProject)
+        val editor = FileEditorManager.getInstance(currentProject)
             .openTextEditor(OpenFileDescriptor(currentProject, vfile), true);
 
         WriteCommandAction.runWriteCommandAction(
@@ -134,5 +139,7 @@ class GenAction : AnAction() {
         ) {
             oc_file.containingDirectory.add(new_file)
         }
+        ToHiglight.elements = ToHiglight.elements.plus(class_element)
     }
+
 }
